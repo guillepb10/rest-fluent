@@ -8,7 +8,8 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.ts',
-    '!**/node_modules/**'
+    '!**/node_modules/**',
+    '!src/dsl/**/*.ts'
   ],
   coverageReporters: ["text","html"],
   coverageThreshold: {
