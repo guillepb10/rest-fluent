@@ -1,6 +1,7 @@
 .nyc_output/
 .vscode/
 coverage/
-lib/
+**/lib/
+**/bin/
 node_modules/
 **/*.tgz

@@ -1,5 +1,5 @@
 import ServiceBuilder from "./dsl/builder";
-import ServiceBuilderImpl from "../src/builder/service";
+import ServiceBuilderImpl from './builder/service';
 import { injectable } from "inversify";
 
 @injectable()
