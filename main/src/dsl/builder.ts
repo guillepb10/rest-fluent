@@ -6,11 +6,11 @@ import ServiceImplDefinition from "./daos/impl";
 import ServiceBodyParamDefinition from "./daos/body.params";
 
 export enum HttpMethod {
-    GET,
-    POST,
-    PUT,
-    PATCH,
-    DELETE
+    GET = "GET",
+    POST = "POST",
+    PUT = "PUT",
+    PATCH = "PATCH",
+    DELETE = "DELETE"
 }
 
 

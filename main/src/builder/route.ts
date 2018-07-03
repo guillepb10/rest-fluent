@@ -58,13 +58,13 @@ export default class RouteBuilder {
     }
 
     private handleRequest(req: Request, res: Response, next: NextFunction, argNames: string[], endpoint: ServiceEndpoint, pathMatcher: RegExp, paramsIdx: { [id: number]: number }, impl: Service) {
-        let argValues = this.validateQueryParams(req.query, argNames, endpoint.queryParams);
-        this.concatPathParams(req, pathMatcher, paramsIdx, argValues);
-        if(endpoint.body){
-            let body = argNames.findIndex(arg => arg === endpoint.body);
-            argValues[body] = req.body;
-        }
         try {
+            let argValues = this.validateQueryParams(req.query, argNames, endpoint.queryParams);
+            this.concatPathParams(req, pathMatcher, paramsIdx, argValues);
+            if(endpoint.body){
+                let body = argNames.findIndex(arg => arg === endpoint.body);
+                argValues[body] = req.body;
+            }
             res.json(endpoint.implMethod.apply(impl, argValues));
         } catch (e) {
             next(e);
@@ -86,7 +86,7 @@ export default class RouteBuilder {
         if (definition) {
             for (const reqParam of Object.keys(request)) {
                 if (!(reqParam in definition)) {
-                    throw new BadRequestException(`Unknown query param ${reqParam}`);
+                    throw new BadRequestException();
                 } else {
                     let implArgIdx = implArgs.findIndex(arg => arg === definition[reqParam]);
                     values[implArgIdx] = request[reqParam];
@@ -94,7 +94,7 @@ export default class RouteBuilder {
             }
             return values;
         } else if (Object.keys(request).length > 0) {
-            throw new BadRequestException(`Unknown query params ${Object.keys(request)}`);
+            throw new BadRequestException();
         }
         return values;
     }
@@ -110,7 +110,7 @@ export default class RouteBuilder {
                     let pathParams = endpoint.pathParams;
                     idxParams[idx++] = args.findIndex(arg => arg === pathParams[param.substr(1, param.length - 2)]);
                 } else {
-                    throw new BadRequestException('Path param not found in definition');
+                    throw new BadRequestException();
                 }
             }
         }

@@ -11,6 +11,7 @@ import container from '../restFluent.inversify';
 import ServiceParamDefinition from '../dsl/daos/param';
 import ServiceImplDefinition from '../dsl/daos/impl';
 import ServiceBodyParamDefinition from '../dsl/daos/body.params';
+import NotFoundResourceException from '../exceptions/notFound';
 
 export default class ServiceBuilderImpl implements ServiceBuilder {
 
@@ -93,8 +94,14 @@ export default class ServiceBuilderImpl implements ServiceBuilder {
         let routeBuilder: RouteBuilder = new RouteBuilder(server);
         routeBuilder.buildRoutes(this._endpoints);
 
-        server.use(this._handler.catch);
+        // handler no route found
+        server.use(function(_req:any, _res: any, next: any){
+            next(new NotFoundResourceException());
+        });
 
+        // call exception handler
+        server.use((err:any, req:any, res:any, next:any) => this._handler.catch(err, req, res, next));
+        
         return new Application(server, this._modules);
     }
 

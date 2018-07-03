@@ -1,11 +1,9 @@
 import ServiceErrorHandler from '../dsl/daos/error.handler';
-import { Response } from 'express';
-import { IncomingMessage } from 'http';
+import BaseException from '../exceptions/base';
 
 export default class DefaultServiceErrorHandler implements ServiceErrorHandler {
     
-    catch(err: IncomingMessage, res: Response): void{
-        err;
-        res.status(500).send("Internal Server Error");
+    catch(err:BaseException, _req: any, res: any, _next:any): void{
+        res.status(err.code).send(err.message);
     }
 }

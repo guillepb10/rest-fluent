@@ -6,14 +6,14 @@
   "main": "main/lib/index.js",
   "scripts": {
     "clean": "./node_modules/.bin/rimraf main/lib ",
-    "clean:test": "./node_modules/.bin/rimraf coverage/",
     "build": "npm run clean && ./node_modules/.bin/tsc -p main/tsconfig.json",
-    "test": "./node_modules/.bin/jest --silent",
-    "verify": "npm run build && npm run test"
+    "clean:test": "./node_modules/.bin/rimraf test/acceptance/bin/",
+    "build:test": "npm run clean:test && ./node_modules/.bin/tsc -p test/acceptance/tsconfig.json",
+    "acceptance": "npm run build:test && ./node_modules/.bin/cucumber-js --require ./test/acceptance/bin --format snippets --format summary ./test/acceptance/features",
+    "coverage": "nyc --all npm run acceptance"
   },
   "files": [
-    "main/lib/src/**/*.js",
-    "main/lib/src/**/*.d.ts"
+    "main/lib/**/*.*"
   ],
   "dependencies": {
     "@types/body-parser": "^1.17.0",
@@ -22,11 +22,14 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "inversify": "^4.13.0",
+    "nyc": "^12.0.2",
     "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
+    "@types/cucumber": "^4.0.4",
     "@types/jest": "^22.2.3",
+    "axios": "^0.18.0",
     "chai": "^4.1.2",
     "cucumber": "^4.2.1",
     "rimraf": "^2.6.2",

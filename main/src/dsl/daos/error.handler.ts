@@ -1,6 +1,5 @@
-import { Response } from "express";
-import { IncomingMessage } from "http";
+import BaseException from "../../exceptions/base";
 
 export default interface ServiceErrorHandler {
-    catch(err: IncomingMessage, res?: Response, next?: Function): void;
+    catch(err:BaseException, _req: any, res: any, _next:any): void;
 }

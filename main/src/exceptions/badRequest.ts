@@ -1,5 +1,8 @@
-export default class BadRequestException {
-    constructor(message: string) {
-        Error.apply(this, message);
+import BaseException from "./base";
+
+export default class BadRequestException extends BaseException {
+    
+    constructor() {
+        super('Not a valid request', 400);
     }
 }

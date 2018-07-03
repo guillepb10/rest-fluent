@@ -1,0 +1,12 @@
+{
+  "compileOnSave": true,
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./bin",
+    "allowJs": true,
+    "sourceMap": true
+  },
+  "include": [
+    "./src/**/*.*"
+  ]
+}
